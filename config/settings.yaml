@@ -1,0 +1,173 @@
+# Threat Intelligence Dashboard Configuration
+
+# Elasticsearch Configuration
+elasticsearch:
+  host: "localhost"
+  port: 9200
+  username: ""
+  password: ""
+  ssl_verify: false
+  timeout: 30
+  max_retries: 3
+
+# Redis Configuration
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: ""
+
+# Threat Intelligence Sources
+threat_feeds:
+  # MISP Configuration
+  misp:
+    enabled: true
+    url: "https://your-misp-instance.com"
+    api_key: "YOUR_MISP_API_KEY"
+    verify_ssl: false
+    tags_to_fetch: ["apt", "malware", "phishing"]
+    
+  # AlienVault OTX
+  otx:
+    enabled: true
+    api_key: "YOUR_OTX_API_KEY"
+    pulse_types: ["malware", "phishing", "scanning"]
+    
+  # VirusTotal
+  virustotal:
+    enabled: true
+    api_key: "YOUR_VT_API_KEY"
+    rate_limit: 4  # requests per minute for free tier
+    
+  # Shodan
+  shodan:
+    enabled: true
+    api_key: "YOUR_SHODAN_API_KEY"
+    
+  # Custom RSS Feeds
+  rss_feeds:
+    - name: "US-CERT"
+      url: "https://www.us-cert.gov/ncas/all.xml"
+      enabled: true
+    - name: "SANS"
+      url: "https://isc.sans.edu/rssfeed.xml"
+      enabled: true
+
+# IOC Processing
+ioc_processing:
+  # Enrichment settings
+  enrichment:
+    enabled: true
+    max_concurrent: 10
+    timeout: 30
+    
+  # Validation rules
+  validation:
+    min_confidence: 50
+    require_source: true
+    whitelist_domains: ["example.com", "test.local"]
+    
+  # Deduplication
+  deduplication:
+    enabled: true
+    hash_fields: ["value", "type"]
+    ttl_days: 30
+
+# Alert Configuration
+alerting:
+  # Global alert settings
+  enabled: true
+  min_severity: "medium"
+  max_alerts_per_hour: 100
+  
+  # Email alerts
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: "alerts@yourcompany.com"
+    password: "YOUR_EMAIL_PASSWORD"
+    recipients: ["security@yourcompany.com"]
+    
+  # Slack alerts
+  slack:
+    enabled: false
+    webhook_url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+    channel: "#security-alerts"
+    
+  # Discord alerts
+  discord:
+    enabled: false
+    webhook_url: "https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK"
+    
+  # Custom webhook
+  webhook:
+    enabled: false
+    url: "https://your-siem.com/api/alerts"
+    headers:
+      Authorization: "Bearer YOUR_TOKEN"
+
+# Threat Actor Profiling
+threat_actors:
+  # Analysis settings
+  profiling:
+    enabled: true
+    min_iocs_for_profile: 5
+    similarity_threshold: 0.75
+    update_interval_hours: 6
+    
+  # Attribution sources
+  attribution_sources:
+    - "misp"
+    - "otx"
+    - "manual"
+
+# Data Retention
+retention:
+  # IOC retention (days)
+  iocs: 90
+  # Alert retention (days)
+  alerts: 365
+  # Log retention (days)
+  logs: 30
+  # Threat actor data (days)
+  threat_actors: 180
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  log_level: "info"
+  cors_origins: ["http://localhost:3000", "http://localhost:5601"]
+  
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/threat_intel.log"
+  max_size: "100MB"
+  backup_count: 5
+
+# Monitoring
+monitoring:
+  metrics:
+    enabled: true
+    port: 9090
+    
+  health_checks:
+    enabled: true
+    interval_seconds: 60
+    
+# Security
+security:
+  api_key_header: "X-API-Key"
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    
+# Development
+development:
+  debug: false
+  reload: false
+  sample_data: false

@@ -1,0 +1,55 @@
+# Kibana Configuration for Threat Intelligence Dashboard
+
+server.name: "threat-intel-kibana"
+server.host: "0.0.0.0"
+server.port: 5601
+
+# Elasticsearch configuration
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+elasticsearch.username: ""
+elasticsearch.password: ""
+
+# Security settings (disabled for development)
+xpack.security.enabled: false
+xpack.encryptedSavedObjects.encryptionKey: "threat-intel-dashboard-key-32-chars"
+xpack.reporting.encryptionKey: "threat-intel-dashboard-key-32-chars"
+xpack.security.encryptionKey: "threat-intel-dashboard-key-32-chars"
+
+# Monitoring
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+
+# Logging
+logging.appenders:
+  file:
+    type: file
+    fileName: /usr/share/kibana/logs/kibana.log
+    layout:
+      type: json
+      
+logging.root:
+  appenders:
+    - default
+    - file
+  level: info
+
+# Dashboard settings
+kibana.index: ".kibana-threat-intel"
+kibana.defaultAppId: "dashboard"
+
+# Advanced settings
+server.maxPayload: 1048576
+server.compression.enabled: true
+
+# Threat Intelligence specific settings
+data.search.aggs.shardDelay.enabled: true
+data.search.sessions.enabled: true
+
+# Maps configuration (for geographic IOC visualization)
+xpack.maps.enabled: true
+map.tilemap.url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+# Machine Learning
+xpack.ml.enabled: true
+
+# Canvas (for custom dashboards)
+xpack.canvas.enabled: true

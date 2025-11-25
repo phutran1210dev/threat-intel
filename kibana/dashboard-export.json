@@ -1,0 +1,80 @@
+{
+  "version": "8.11.0",
+  "objects": [
+    {
+      "id": "threat-intel-overview",
+      "type": "dashboard",
+      "attributes": {
+        "title": "Threat Intelligence Overview",
+        "description": "Main dashboard for threat intelligence monitoring",
+        "panelsJSON": "[{\"version\":\"8.11.0\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"panelIndex\":\"1\",\"embeddableConfig\":{},\"panelRefName\":\"panel_1\"}]",
+        "timeRestore": false,
+        "timeTo": "now",
+        "timeFrom": "now-24h",
+        "refreshInterval": {
+          "pause": false,
+          "value": 30000
+        },
+        "version": 1
+      },
+      "references": [
+        {
+          "name": "panel_1",
+          "type": "visualization",
+          "id": "ioc-timeline"
+        }
+      ]
+    },
+    {
+      "id": "ioc-timeline",
+      "type": "visualization",
+      "attributes": {
+        "title": "IOC Timeline",
+        "description": "Timeline of IOC detections",
+        "visState": "{\"title\":\"IOC Timeline\",\"type\":\"histogram\",\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"created_at\",\"timeRange\":{\"from\":\"now-24h\",\"to\":\"now\"},\"useNormalizedEsInterval\":true,\"scaleMetricValues\":false,\"interval\":\"auto\",\"drop_partials\":false,\"min_doc_count\":1,\"extended_bounds\":{}}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"threat_iocs\",\"query\":{\"match_all\":{}},\"filter\":[]}"
+        },
+        "version": 1
+      },
+      "references": [
+        {
+          "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+          "type": "index-pattern",
+          "id": "threat_iocs_pattern"
+        }
+      ]
+    },
+    {
+      "id": "threat_iocs_pattern",
+      "type": "index-pattern",
+      "attributes": {
+        "title": "threat_iocs*",
+        "timeFieldName": "created_at",
+        "fields": "[{\"name\":\"@timestamp\",\"type\":\"date\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"value\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"type\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"threat_level\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"confidence\",\"type\":\"number\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"tags\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"created_at\",\"type\":\"date\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"geo_point\",\"type\":\"geo_point\",\"searchable\":true,\"aggregatable\":true}]",
+        "version": 1
+      }
+    },
+    {
+      "id": "threat_actors_pattern",
+      "type": "index-pattern", 
+      "attributes": {
+        "title": "threat_actors*",
+        "timeFieldName": "created_at",
+        "fields": "[{\"name\":\"name\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"actor_type\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"sophistication\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"attributed_country\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"threat_score\",\"type\":\"number\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"active\",\"type\":\"boolean\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"created_at\",\"type\":\"date\",\"searchable\":true,\"aggregatable\":true}]",
+        "version": 1
+      }
+    },
+    {
+      "id": "threat_alerts_pattern", 
+      "type": "index-pattern",
+      "attributes": {
+        "title": "threat_alerts*",
+        "timeFieldName": "created_at",
+        "fields": "[{\"name\":\"title\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":false},{\"name\":\"severity\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"status\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"category\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"risk_score\",\"type\":\"number\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"source_system\",\"type\":\"string\",\"searchable\":true,\"aggregatable\":true},{\"name\":\"created_at\",\"type\":\"date\",\"searchable\":true,\"aggregatable\":true}]",
+        "version": 1
+      }
+    }
+  ]
+}

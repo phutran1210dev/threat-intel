@@ -1,0 +1,10 @@
+# Basic Kibana Configuration
+server.name: kibana
+server.host: "0.0.0.0"
+server.port: 5601
+
+# Elasticsearch Configuration  
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+
+# Disable security for development
+xpack.security.enabled: false

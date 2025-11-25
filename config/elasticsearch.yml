@@ -1,0 +1,49 @@
+# Elasticsearch Configuration for Threat Intelligence Dashboard
+
+cluster.name: threat-intel-cluster
+node.name: threat-intel-node
+
+# Network settings
+network.host: 0.0.0.0
+http.port: 9200
+
+# Discovery settings
+discovery.type: single-node
+
+# Security settings (disabled for development)
+xpack.security.enabled: false
+xpack.security.enrollment.enabled: false
+xpack.security.http.ssl.enabled: false
+xpack.security.transport.ssl.enabled: false
+
+# Memory settings
+bootstrap.memory_lock: true
+
+# Path settings
+path.data: /usr/share/elasticsearch/data
+path.logs: /usr/share/elasticsearch/logs
+
+# Index settings for threat intelligence data
+action.auto_create_index: "+threat_*,+alert_*,+actor_*,-*"
+
+# Monitoring
+xpack.monitoring.collection.enabled: true
+
+# Machine Learning (if needed)
+xpack.ml.enabled: true
+
+# Performance tuning
+indices.memory.index_buffer_size: 10%
+indices.fielddata.cache.size: 20%
+
+# Thread pool settings
+thread_pool:
+  write:
+    size: 2
+    queue_size: 1000
+  search:
+    size: 4
+    queue_size: 1000
+
+# Index lifecycle management
+action.destructive_requires_name: true

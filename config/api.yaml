@@ -1,0 +1,40 @@
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:5601" 
+    - "http://localhost:8080"
+  log_level: "INFO"
+
+# Elasticsearch Configuration  
+elasticsearch:
+  host: "elasticsearch"
+  port: 9200
+  timeout: 30
+  max_retries: 3
+  retry_on_timeout: true
+  
+# Redis Configuration
+redis:
+  host: "redis"
+  port: 6379
+  db: 0
+  
+# Security
+security:
+  jwt_secret: "your-secret-key-here"
+  jwt_algorithm: "HS256"
+  jwt_expiration: 86400  # 24 hours
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 100
+  
+# Pagination
+pagination:
+  default_page_size: 50
+  max_page_size: 1000
